@@ -2,5 +2,5 @@
 
 public class LoggerOptions
 {
-    public SinkOptions[] Sinks { get; set; }
+    public Dictionary<string, SinkOptions> Sinks { get; set; } = new();
 }

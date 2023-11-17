@@ -3,22 +3,31 @@
 using Logger.Abstractions;
 using Logger.Configurations;
 using Logger.Core;
-using Logger.Core.Sinks;
+using Logger.Sinks.Console;
+using Logger.Sinks.File;
 
 // Setup Configurations
 var loggerOptions = new LoggerOptions()
 {
-    Sinks = new SinkOptions[]
+    Sinks =
     {
-        new SinkOptions()
         {
-            Name = "Console",
-            LogLevels = new[] { "Trace", "Debug", "Info", "Warn", "Error", "Fatal" }
+            "Console",
+            new ConsoleSinkOptions()
+            {
+                IsEnabled = true,
+                ActiveLogLevel = LogLevel.Trace | LogLevel.Debug | LogLevel.Info | LogLevel.Warn | LogLevel.Error | LogLevel.Fatal
+            }
         },
-        new SinkOptions()
         {
-            Name = "File",
-            LogLevels = new[] { "Info", "Warn", "Error", "Fatal" }
+            "File",
+            new FileSinkOptions()
+            {
+                IsEnabled = true,
+                ActiveLogLevel = LogLevel.Info | LogLevel.Warn | LogLevel.Error | LogLevel.Fatal,
+                Path = "",
+                NamePrefix = "log"
+            }
         }
     }
 };
@@ -26,8 +35,8 @@ var loggerOptions = new LoggerOptions()
 // Create Sinks
 var sinks = new Dictionary<string, ISink>
 {
-    { "Console", new ConsoleSink() },
-    { "File", new FileSink("logs.txt") }
+    { "Console", new Logger.Sinks.Console.Sink(loggerOptions.Sinks["Console"] as ConsoleSinkOptions) },
+    { "File", new Logger.Sinks.File.Sink(loggerOptions.Sinks["File"] as FileSinkOptions) }
 };
 
 // Build LogLevel Sink Map

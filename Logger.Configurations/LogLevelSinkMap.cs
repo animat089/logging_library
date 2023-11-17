@@ -10,16 +10,20 @@ public class LogLevelSinkMap
     public LogLevelSinkMap(LoggerOptions loggerOptions, IDictionary<string, ISink> sinks)
     {
         logLevelSinkMap = new();
+        var logLevels = Enum.GetValues(typeof(LogLevel)).Cast<LogLevel>().AsEnumerable();
 
         foreach (var sinkOptions in loggerOptions.Sinks)
         {
-            if (sinks.TryGetValue(sinkOptions.Name, out ISink? sink))
+            if (sinks.TryGetValue(sinkOptions.Key, out ISink? sink))
             {
-                foreach (var logLevel in sinkOptions.LogLevels)
+                if (!sinkOptions.Value.IsEnabled)
+                    continue;
+
+                foreach (var logLevel in logLevels)
                 {
-                    if (LogLevel.TryParse(logLevel, out LogLevel level))
+                    if ((sinkOptions.Value.ActiveLogLevel & logLevel) == logLevel)
                     {
-                        Add(level, sink);
+                        Add(logLevel, sink);
                     }
                 }
             }
