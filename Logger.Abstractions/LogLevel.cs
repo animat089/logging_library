@@ -9,30 +9,30 @@ public enum LogLevel
     /// <summary>
     /// Log level to represent log trace
     /// </summary>
-    Trace = 1,
+    Trace = 0,
 
     /// <summary>
     /// Log level to represent log debug
     /// </summary>
-    Debug = 2,
+    Debug = 1,
 
     /// <summary>
     /// Log level to represent log information
     /// </summary>
-    Info = 4,
+    Info = 2,
 
     /// <summary>
     /// Log level to represent log warning
     /// </summary>
-    Warn = 8,
+    Warn = 4,
 
     /// <summary>
     /// Log level to represent log error
     /// </summary>
-    Error = 16,
+    Error = 8,
 
     /// <summary>
     /// Log level to represent log fatal
     /// </summary>
-    Fatal = 32
+    Fatal = 16
 }
