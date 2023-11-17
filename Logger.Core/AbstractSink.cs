@@ -1,14 +1,25 @@
 ﻿using Logger.Abstractions;
+using Logger.Configurations;
 
 namespace Logger.Core;
 
-public abstract class Sink : ISink
+public abstract class AbstractSink<TSinkOptions> : ISink
+    where TSinkOptions : SinkOptions, new()
 {
     private static readonly object lockObject = new object();
+    protected readonly TSinkOptions sinkOptions;
+
+    protected AbstractSink(TSinkOptions sinkOptions)
+    {
+        this.sinkOptions = sinkOptions;
+    }
 
     /// <inheritdoc/>
     public void WriteLog(LogEntry logEntry)
     {
+        if ((sinkOptions.ActiveLogLevel & logEntry.LogLevel) != logEntry.LogLevel)
+            return;
+
         try
         {
             lock (lockObject)

@@ -1,17 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Logger.Configurations\Logger.Configurations.csproj" />
     <ProjectReference Include="..\Logger.Core\Logger.Core.csproj" />
-    <ProjectReference Include="..\Logger.Sinks.Console\Logger.Sinks.Console.csproj" />
-    <ProjectReference Include="..\Logger.Sinks.File\Logger.Sinks.File.csproj" />
   </ItemGroup>
 
 </Project>

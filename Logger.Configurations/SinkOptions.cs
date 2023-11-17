@@ -1,8 +1,10 @@
-﻿namespace Logger.Configurations;
+﻿using Logger.Abstractions;
 
-public class SinkOptions
+namespace Logger.Configurations;
+
+public abstract class SinkOptions
 {
-    public string Name { get; set; }
+    public bool IsEnabled { get; set; }
 
-    public string[] LogLevels { get; set; }
+    public LogLevel ActiveLogLevel { get; set; }
 }

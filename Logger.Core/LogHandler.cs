@@ -30,18 +30,17 @@ internal abstract class LogHandler
     /// <param name="logEntry">Log to be made</param>
     public void WriteLog(LogEntry logEntry)
     {
-        if (this.logLevel == logEntry.LogLevel)
+        if (this.logLevel > logEntry.LogLevel
+            && this.inferiorLogger != null)
+        {
+            inferiorLogger.WriteLog(logEntry);
+        }
+        else
         {
             foreach (var sink in configuredSinks)
             {
                 sink.WriteLog(logEntry);
             }
-        }
-        else if (
-            this.logLevel > logEntry.LogLevel
-            && this.inferiorLogger != null)
-        {
-            inferiorLogger.WriteLog(logEntry);
         }
     }
 }
